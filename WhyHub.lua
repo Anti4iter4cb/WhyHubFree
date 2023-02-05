@@ -96,6 +96,26 @@ end
   	end    
 })
 
+local Section = Tab:AddSection({
+	Name = "Katana AutoFarm"
+})
+
+Tab:AddToggle({
+	Name = "Rapid Slashes|required katana",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		_G.RS = Value
+		while _G.RS == true do
+		    local args = {
+    [1] = "Rapid Slashes"
+}
+
+game:GetService("ReplicatedStorage").Events.Skill:InvokeServer(unpack(args))
+        end
+	end    
+})
+
 
 local Tab = Window:MakeTab({Name = "Islands TP",Icon = "rbxassetid://4483345998",PremiumOnly = false})
 
@@ -234,13 +254,13 @@ bypass_teleport(teleport_table.location5)
 })
 
 Tab:AddButton({
-	Name = "Shark Park",
+	Name = "Shark Park insta",
 	Callback = function()
 	    local teleport_table = {
-    location6 = Vector3.new(878, 4, -13150)
+    location7 = Vector3.new(545, 20, -13647)
 }
 local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(325,Enum.EasingStyle.Linear)
+local tweeninfo = TweenInfo.new(0,Enum.EasingStyle.Linear)
 
 local lp = game.Players.LocalPlayer
 
@@ -253,7 +273,32 @@ function bypass_teleport(v)
     end
 end
 
-bypass_teleport(teleport_table.location6)
+bypass_teleport(teleport_table.location7)
+      		print("button pressed")
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Roca Island",
+	Callback = function()
+	    local teleport_table = {
+    location8 = Vector3.new(5160, 4, -4799)
+}
+local tween_s = game:GetService('TweenService')
+local tweeninfo = TweenInfo.new(350,Enum.EasingStyle.Linear)
+
+local lp = game.Players.LocalPlayer
+
+function bypass_teleport(v)
+    if lp.Character and 
+    lp.Character:FindFirstChild('HumanoidRootPart') then
+        local cf = CFrame.new(v)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+        a:Play()
+    end
+end
+
+bypass_teleport(teleport_table.location8)
       		print("button pressed")
   	end    
 })
@@ -291,8 +336,201 @@ game.Players.PlayerAdded:Connect(function(player)
 	hightlightClone.Adornee = Players.Character
 	hightlightClone.Parent = Players.Character:FindFirstChild("HumanoidRootPart")
 end)
+
 end
-  	end    
+
+end
+  
+})
+
+Tab:AddButton({
+	Name = "BOX ESP",
+	Callback = function()
+      		print("button pressed")
+      		local lplr = game.Players.LocalPlayer
+local camera = game:GetService("Workspace").CurrentCamera
+local CurrentCamera = workspace.CurrentCamera
+local worldToViewportPoint = CurrentCamera.worldToViewportPoint
+
+local HeadOff = Vector3.new(0, 0.5, 0)
+local LegOff = Vector3.new(0,3,0)
+
+for i,v in pairs(game.Players:GetChildren()) do
+    local BoxOutline = Drawing.new("Square")
+    BoxOutline.Visible = false
+    BoxOutline.Color = Color3.new(0,0,0)
+    BoxOutline.Thickness = 3
+    BoxOutline.Transparency = 1
+    BoxOutline.Filled = false
+
+    local Box = Drawing.new("Square")
+    Box.Visible = false
+    Box.Color = Color3.new(255,0,0)
+    Box.Thickness = 1
+    Box.Transparency = 1
+    Box.Filled = false
+
+    local HealthBarOutline = Drawing.new("Square")
+    HealthBarOutline.Thickness = 3
+    HealthBarOutline.Filled = false
+    HealthBarOutline.Color = Color3.new(0,255,0)
+    HealthBarOutline.Transparency = 1
+    HealthBarOutline.Visible = false
+
+    local HealthBar = Drawing.new("Square")
+    HealthBar.Thickness = 1
+    HealthBar.Filled = false
+    HealthBar.Transparency = 1
+    HealthBar.Visible = false
+
+    function boxesp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, onScreen = camera:worldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                local RootPart = v.Character.HumanoidRootPart
+                local Head = v.Character.Head
+                local RootPosition, RootVis = worldToViewportPoint(CurrentCamera, RootPart.Position)
+                local HeadPosition = worldToViewportPoint(CurrentCamera, Head.Position + HeadOff)
+                local LegPosition = worldToViewportPoint(CurrentCamera, RootPart.Position - LegOff)
+
+                if onScreen then
+                    BoxOutline.Size = Vector2.new(3000 / RootPosition.Z, HeadPosition.Y - LegPosition.Y)
+                    BoxOutline.Position = Vector2.new(RootPosition.X - BoxOutline.Size.X / 2, RootPosition.Y - BoxOutline.Size.Y / 2)
+                    BoxOutline.Visible = true
+
+                    Box.Size = Vector2.new(3000 / RootPosition.Z, HeadPosition.Y - LegPosition.Y)
+                    Box.Position = Vector2.new(RootPosition.X - Box.Size.X / 2, RootPosition.Y - Box.Size.Y / 2)
+                    Box.Visible = true
+
+                    HealthBarOutline.Size = Vector2.new(2, HeadPosition.Y - LegPosition.Y)
+                    HealthBarOutline.Position = BoxOutline.Position - Vector2.new(6,0)
+                    HealthBarOutline.Visible = true
+
+                    HealthBar.Size = Vector2.new(2, (HeadPosition.Y - LegPosition.Y) / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / math.clamp(game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value, 0, game:GetService("Players")[v.Character.Name].NRPBS:WaitForChild("MaxHealth").Value)))
+                    HealthBar.Position = Vector2.new(Box.Position.X - 6, Box.Position.Y + (1 / HealthBar.Size.Y))
+                    HealthBar.Color = Color3.fromRGB(255 - 255 / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value), 255 / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value), 0)
+                    HealthBar.Visible = true
+
+                    if v.TeamColor == lplr.TeamColor then
+                        --- Our Team
+                        BoxOutline.Visible = false
+                        Box.Visible = false
+                        HealthBarOutline.Visible = false
+                        HealthBar.Visible = false
+                    else
+                        ---Enemy Team
+                        BoxOutline.Visible = true
+                        Box.Visible = true
+                        HealthBarOutline.Visible = true
+                        HealthBar.Visible = true
+                    end
+
+                else
+                    BoxOutline.Visible = false
+                    Box.Visible = false
+                    HealthBarOutline.Visible = false
+                    HealthBar.Visible = false
+                end
+            else
+                BoxOutline.Visible = false
+                Box.Visible = false
+                HealthBarOutline.Visible = false
+                HealthBar.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(boxesp)()
+end
+
+game.Players.PlayerAdded:Connect(function(v)
+    local BoxOutline = Drawing.new("Square")
+    BoxOutline.Visible = false
+    BoxOutline.Color = Color3.new(0,0,0)
+    BoxOutline.Thickness = 3
+    BoxOutline.Transparency = 1
+    BoxOutline.Filled = false
+
+    local Box = Drawing.new("Square")
+    Box.Visible = false
+    Box.Color = Color3.new(255,0,0)
+    Box.Thickness = 1
+    Box.Transparency = 1
+    Box.Filled = false
+
+    local HealthBarOutline = Drawing.new("Square")
+    HealthBarOutline.Thickness = 3
+    HealthBarOutline.Filled = false
+    HealthBarOutline.Color = Color3.new(0,255,0)
+    HealthBarOutline.Transparency = 1
+    HealthBarOutline.Visible = false
+
+    local HealthBar = Drawing.new("Square")
+    HealthBar.Thickness = 1
+    HealthBar.Filled = false
+    HealthBar.Transparency = 1
+    HealthBar.Visible = false
+
+    function boxesp()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v ~= lplr and v.Character.Humanoid.Health > 0 then
+                local Vector, onScreen = camera:worldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                local RootPart = v.Character.HumanoidRootPart
+                local Head = v.Character.Head
+                local RootPosition, RootVis = worldToViewportPoint(CurrentCamera, RootPart.Position)
+                local HeadPosition = worldToViewportPoint(CurrentCamera, Head.Position + HeadOff)
+                local LegPosition = worldToViewportPoint(CurrentCamera, RootPart.Position - LegOff)
+
+                if onScreen then
+                    BoxOutline.Size =   Vector2.new(1000 / RootPosition.Z, HeadPosition.Y - LegPosition.Y)
+                    BoxOutline.Position = Vector2.new(RootPosition.X - BoxOutline.Size.X / 2, RootPosition.Y - BoxOutline.Size.Y / 2)
+                    BoxOutline.Visible = true
+
+                    Box.Size = Vector2.new(1000 / RootPosition.Z, HeadPosition.Y - LegPosition.Y)
+                    Box.Position = Vector2.new(RootPosition.X - Box.Size.X / 2, RootPosition.Y - Box.Size.Y / 2)
+                    Box.Visible = true
+
+                    HealthBarOutline.Size = Vector2.new(2, HeadPosition.Y - LegPosition.Y)
+                    HealthBarOutline.Position = BoxOutline.Position - Vector2.new(6,0)
+                    HealthBarOutline.Visible = true
+
+                    HealthBar.Size = Vector2.new(2, (HeadPosition.Y - LegPosition.Y) / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / math.clamp(game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value, 0, game:GetService("Players")[v.Character.Name].NRPBS:WaitForChild("MaxHealth").Value)))
+                    HealthBar.Position = Vector2.new(Box.Position.X - 6, Box.Position.Y + (1/HealthBar.Size.Y))
+		    HealthBar.Color = Color3.fromRGB(255 - 255 / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value), 255 / (game:GetService("Players")[v.Character.Name].NRPBS["MaxHealth"].Value / game:GetService("Players")[v.Character.Name].NRPBS["Health"].Value), 0)                    
+		    HealthBar.Visible = true
+
+                    if v.TeamColor == lplr.TeamColor then
+                        --- Our Team
+                        BoxOutline.Visible = false
+                        Box.Visible = false
+                        HealthBarOutline.Visible = false
+                        HealthBar.Visible = false
+                    else
+                        ---Enemy Team
+                        BoxOutline.Visible = true
+                        Box.Visible = true
+                        HealthBarOutline.Visible = true
+                        HealthBar.Visible = true
+                    end
+
+                else
+                    BoxOutline.Visible = false
+                    Box.Visible = false
+                    HealthBarOutline.Visible = false
+                    HealthBar.Visible = false
+                end
+            else
+                BoxOutline.Visible = false
+                Box.Visible = false
+                HealthBarOutline.Visible = false
+                HealthBar.Visible = false
+            end
+        end)
+    end
+    coroutine.wrap(boxesp)()
+end)
+end
 })
 
 Tab:AddButton({
@@ -373,10 +611,52 @@ Tab:AddButton({
 	Callback = function()
       		print("button pressed")
       		
-game:GetService("ReplicatedStorage").Events.FALLDmg:Destroy()
+NOFALLDMG = true
 
+while NOFALLDMG == true do
+
+game:GetService("ReplicatedStorage").Events.FallDmg:Destroy()
+end
     end    
 })
+
+local Tab = Window:MakeTab({
+	Name = "Style|items",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "For 1 SS"
+})
+
+Tab:AddButton({
+	Name = "1 SS|10k Pelli",
+	Callback = function()
+      		print("button pressed")
+
+local args = {
+    [1] = "1SS"
+}
+
+game:GetService("ReplicatedStorage").Events.learnStyle:FireServer(unpack(args))
+
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Katana|1k Pelli",
+	Callback = function()
+      		print("button pressed")
+local args = {
+    [1] = workspace.BuyableItems.Katana
+}
+
+game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(unpack(args))
+
+  	end    
+})
+
 
 local Tab = Window:MakeTab({
 	Name = "Misc",
@@ -394,4 +674,177 @@ Tab:AddButton({
       		print("button pressed")
       		loadstring(game:HttpGet("https://pastebin.com/raw/stggPUBM", true))()
   	end    
+})
+
+Tab:AddButton({
+	Name = "AUTO BUY LOG POS",
+	Callback = function()
+      		print("button pressed")
+      	local args = {
+    [1] = workspace.NPCs.Robo
+}
+
+game:GetService("ReplicatedStorage").Events.SetSpawn:FireServer(unpack(args))
+
+      	local args = {
+    [2] = workspace.NPCs.Robo
+}
+
+game:GetService("ReplicatedStorage").Events.SetSpawn:FireServer(unpack(args))
+
+  end
+})
+
+Tab:AddButton({
+	Name = "Self knockout",
+	Callback = function()
+      		print("button pressed")
+local args = {
+    [1] = "self"
+}
+
+game:GetService("ReplicatedStorage").Events.KnockedOut:FireServer(unpack(args))
+
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Anti Afk",
+	Callback = function()
+    wait(0.5)local ba=Instance.new("ScreenGui")
+local ca=Instance.new("TextLabel")local da=Instance.new("Frame")
+local _b=Instance.new("TextLabel")local ab=Instance.new("TextLabel")ba.Parent=game.CoreGui
+ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;ca.Parent=ba;ca.Active=true
+ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ca.Draggable=true
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0)ca.Size=UDim2.new(0,370,0,52)
+ca.Font=Enum.Font.SourceSansSemibold;ca.Text="ANTI AFK"ca.TextColor3=Color3.new(255,0,0)
+ca.TextSize=22;da.Parent=ca
+da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078)da.Position=UDim2.new(0,0,1.0192306,0)
+da.Size=UDim2.new(0,370,0,107)_b.Parent=da
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)_b.Position=UDim2.new(0,0,0.800455689,0)
+_b.Size=UDim2.new(0,370,0,21)_b.Font=Enum.Font.Arial;_b.Text="WhyHub"
+_b.TextColor3=Color3.new(255,0,0)_b.TextSize=20;ab.Parent=da
+ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ab.Position=UDim2.new(0,0,0.158377,0)
+ab.Size=UDim2.new(0,370,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="ACTIVATED"
+ab.TextColor3=Color3.new(0,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+end)  	
+  	end    
+})
+
+
+local Section = Tab:AddSection({
+    Name = "AutoStats"
+})
+
+Tab:AddToggle({
+	Name = "Strength",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		Strength = Value
+		while Strength == true do
+wait(1)
+local args = {
+    [1] = "Strength",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+
+	    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Stamina",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		Stamina = Value
+		while Stamina == true do
+wait(1)
+local args = {
+    [1] = "Stamina",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+
+	    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Defense",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		Defense = Value
+		while Defense == true do
+wait(1)
+local args = {
+    [1] = "Defense",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+
+	    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Gun",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		Gun = Value
+		while Gun == true do
+wait(1)
+local args = {
+    [1] = "GunMastery",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+	    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Sword",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		Sword = Value
+		while Sword == true do
+wait(1)
+local args = {
+    [1] = "SwordMastery",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+	    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Fruit",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+		fruit = Value
+		while fruit == true do
+wait(1)
+local args = {
+    [1] = "DevilFruitMastery",
+    [3] = 1
+}
+
+game:GetService("ReplicatedStorage").Events.stats:FireServer(unpack(args))
+	    end
+	end    
 })
