@@ -303,6 +303,31 @@ bypass_teleport(teleport_table.location8)
   	end    
 })
 
+Tab:AddButton({
+	Name = "Mysterious Cliff",
+	Callback = function()
+	    local teleport_table = {
+    location9 = Vector3.new(2282, 7, -8558)
+}
+local tween_s = game:GetService('TweenService')
+local tweeninfo = TweenInfo.new(350,Enum.EasingStyle.Linear)
+
+local lp = game.Players.LocalPlayer
+
+function bypass_teleport(v)
+    if lp.Character and 
+    lp.Character:FindFirstChild('HumanoidRootPart') then
+        local cf = CFrame.new(v)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+        a:Play()
+    end
+end
+
+bypass_teleport(teleport_table.location9)
+      		print("button pressed")
+  	end    
+})
+
 local Tab = Window:MakeTab({Name = "Player",Icon = "rbxassetid://4483345998",PremiumOnly = false})
 
 local Section = Tab:AddSection({
@@ -621,6 +646,7 @@ end
   
 })
 
+
 Tab:AddButton({
 	Name = "GOD MODE | Toggle all function (esp) ",
 	Callback = function()
@@ -733,7 +759,7 @@ game:GetService("ReplicatedStorage").Events.learnStyle:FireServer(unpack(args))
 })
 
 Tab:AddButton({
-	Name = "Katana|1k Pelli",
+	Name = "Katana|1k Pelli| FIXED SOON",
 	Callback = function()
       		print("button pressed")
 local args = {
@@ -745,6 +771,70 @@ game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(unpack(args))
   	end    
 })
 
+local Section = Tab:AddSection({
+	Name = "For BlackLeg"
+})
+
+Tab:AddButton({
+	Name = "BlackLeg|9k Pelli",
+	Callback = function()
+      		print("button pressed")
+local args = {
+    [1] = "BlackLeg"
+}
+
+game:GetService("ReplicatedStorage").Events.learnStyle:FireServer(unpack(args))
+
+  	end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Ships",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Ships"
+})
+
+Tab:AddButton({
+	Name = "Rowboat |300 Pelli|FIXED SOON",
+	Callback = function()
+      		print("button pressed")
+      		local args = {
+    [1] = workspace.BuyableItems.Rowboat
+}
+
+game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(unpack(args))
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Caravel|2000 Pelli|FIXED SOON",
+	Callback = function()
+      		print("button pressed")
+
+local args = {
+    [1] = workspace.BuyableItems.Caravel
+}
+
+game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(unpack(args))
+
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Galeon|15k Pelli|FIXED SOON",
+	Callback = function()
+      		print("button pressed")
+      		local args = {
+    [1] = workspace.BuyableItems.Galleon
+}
+
+game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(unpack(args))
+  	end    
+})
 
 local Tab = Window:MakeTab({
 	Name = "Misc",
