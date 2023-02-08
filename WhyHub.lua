@@ -559,11 +559,11 @@ end
 })
 
 Tab:AddButton({
-	Name = "NAME ESP",
+	Name = "ESP NAME",
 	Callback = function()
       		print("button pressed")
-
-local c = workspace.CurrentCamera
+      		
+      	local c = workspace.CurrentCamera
 local ps = game:GetService("Players")
 local lp = ps.LocalPlayer
 local rs = game:GetService("RunService")
@@ -640,12 +640,234 @@ for i,p in next, ps:GetPlayers() do
     end
 end
 
-ps.PlayerAdded:Connect(p_added)
-
-end
-  
+ps.PlayerAdded:Connect(p_added)	
+      		
+  	end    
 })
 
+local Section = Tab:AddSection({
+	Name = "Chest ESP"
+})
+
+Tab:AddButton({
+	Name = "Common Chest",
+	Callback = function()
+      		print("button pressed")
+      		
+      		local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts.Shop.Chests.Common.Top:GetChildren()) do
+    if v.Name == "main" then
+    if not v:FindFirstChild("ESP") then
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    local Highlight = Instance.new("Highlight")
+
+
+    BillboardGui.Parent = v
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.Active = true
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.LightInfluence = 1.000
+    BillboardGui.Size = UDim2.new(250, 0, 250, 0)
+    BillboardGui.Name = "ESP"
+
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.Text = "Common Chest"
+    TextLabel.TextColor3 = Color3.fromRGB(139, 69, 19)
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 14.000
+    TextLabel.TextWrapped = false
+
+    Highlight.Archivable = true
+    Highlight.Adornee = v
+    Highlight.Parent = v
+    Highlight.Name = "ESPHighlight"
+    Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    Highlight.Enabled = true
+    Highlight.FillColor = Color3.new(255,0,0)
+    Highlight.FillTransparency = 0.5
+    Highlight.OutlineColor = Color3.new(255,255,255)
+    Highlight.OutlineTransparency = 0
+
+            end
+        end
+    end
+end)
+      		
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Rare Chest",
+	Callback = function()
+      		print("button pressed")
+      		
+      		local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts.Shop.Chests.Rare.Top:GetChildren()) do
+    if v.Name == "m" then
+    if not v:FindFirstChild("ESP") then
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    local Highlight = Instance.new("Highlight")
+
+
+    BillboardGui.Parent = v
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.Active = true
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.LightInfluence = 1.000
+    BillboardGui.Size = UDim2.new(250, 0, 250, 0)
+    BillboardGui.Name = "ESP"
+
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.Text = "Rare Chest"
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 14.000
+    TextLabel.TextWrapped = false
+
+    Highlight.Archivable = true
+    Highlight.Adornee = v
+    Highlight.Parent = v
+    Highlight.Name = "ESPHighlight"
+    Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    Highlight.Enabled = true
+    Highlight.FillColor = Color3.new(255,0,0)
+    Highlight.FillTransparency = 0.5
+    Highlight.OutlineColor = Color3.new(255,255,255)
+    Highlight.OutlineTransparency = 0
+
+            end
+        end
+    end
+end)
+      		
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Legendary Chest",
+	Callback = function()
+      		print("Button pressed!")
+      		
+      		local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts.Shop.Chests.Legendary.Top:GetChildren()) do
+    if v.Name == "S" then
+    if not v:FindFirstChild("ESP") then
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    local Highlight = Instance.new("Highlight")
+
+
+    BillboardGui.Parent = v
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.Active = true
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.LightInfluence = 1.000
+    BillboardGui.Size = UDim2.new(250, 0, 250, 0)
+    BillboardGui.Name = "ESP"
+
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.Text = "Legendary Chest"
+    TextLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 14.000
+    TextLabel.TextWrapped = false
+
+    Highlight.Archivable = true
+    Highlight.Adornee = v
+    Highlight.Parent = v
+    Highlight.Name = "ESPHighlight"
+    Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    Highlight.Enabled = true
+    Highlight.FillColor = Color3.new(255,0,0)
+    Highlight.FillTransparency = 0.5
+    Highlight.OutlineColor = Color3.new(255,255,255)
+    Highlight.OutlineTransparency = 0
+
+            end
+        end
+    end
+end)
+      		
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Mythical chest",
+	Callback = function()
+      		print("button pressed")
+      		
+      		local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+for i, v in pairs(game:GetService("Player").LocalPlayer.StarterPlayerScripts.Shop.Chests.Mythical.Top:GetChildren()) do
+    if v.Name == "middle" then
+    if not v:FindFirstChild("ESP") then
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    local Highlight = Instance.new("Highlight")
+
+
+    BillboardGui.Parent = v
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.Active = true
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.LightInfluence = 1.000
+    BillboardGui.Size = UDim2.new(250, 0, 250, 0)
+    BillboardGui.Name = "ESP"
+
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.Text = "Mythical Chest"
+    TextLabel.TextColor3 = Color3.fromRGB(255, 0, 255)
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 14.000
+    TextLabel.TextWrapped = false
+
+    Highlight.Archivable = true
+    Highlight.Adornee = v
+    Highlight.Parent = v
+    Highlight.Name = "ESPHighlight"
+    Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    Highlight.Enabled = true
+    Highlight.FillColor = Color3.new(255,0,0)
+    Highlight.FillTransparency = 0.5
+    Highlight.OutlineColor = Color3.new(255,255,255)
+    Highlight.OutlineTransparency = 0
+
+            end
+        end
+    end
+end)
+      		
+  	end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Other"
+})
 
 Tab:AddButton({
 	Name = "GOD MODE | Toggle all function (esp) ",
@@ -782,9 +1004,26 @@ Tab:AddButton({
 local args = {
     [1] = "BlackLeg"
 }
-
 game:GetService("ReplicatedStorage").Events.learnStyle:FireServer(unpack(args))
 
+  	end    
+})
+
+local Section = Tab:AddSection({
+	Name = "Rokushiki"
+})
+
+Tab:AddButton({
+	Name = "Rokushiki|15K Pelli",
+	Callback = function()
+      		print("button pressed")
+      		
+local args = {
+    [1] = "Rokushiki"
+}
+
+game:GetService("ReplicatedStorage").Events.learnStyle:FireServer(unpack(args))
+      		
   	end    
 })
 
